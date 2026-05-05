@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creator Workspace | Fabio Pro</title>
     
+    <!-- Bibliotecas de suporte -->
     <script src="https://jsdelivr.net"></script>
 
     <style>
@@ -23,6 +24,7 @@
         }
 
         body {
+            /* Imagem profissional de estudo/TI */
             background-image: url('https://unsplash.com');
             background-size: cover;
             background-position: center;
@@ -34,7 +36,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             padding: 20px;
             transition: 0.4s;
             color: var(--text-main);
@@ -60,18 +62,21 @@
             text-align: center;
         }
 
-        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; background: rgba(0,0,0,0.02); color: inherit; }
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; background: rgba(0,0,0,0.02); color: inherit; outline: none; }
         button { cursor: pointer; border: none; border-radius: 10px; font-weight: bold; transition: 0.3s; }
         .btn-main { background: var(--primary); color: white; padding: 12px; width: 100%; margin-top: 5px; }
+        .btn-main:hover { filter: brightness(1.2); }
 
         .pergunta { font-size: 1.1rem; min-height: 50px; margin-bottom: 15px; font-weight: bold; }
         .res-feedback { margin-top: 10px; font-weight: bold; height: 20px; }
         .concluida { text-decoration: line-through; opacity: 0.5; color: #636e72; }
 
-        #theme-toggle { position: fixed; top: 20px; right: 20px; font-size: 24px; background: rgba(255,255,255,0.2); border-radius: 50%; padding: 10px; color: white; cursor: pointer; }
+        #theme-toggle { position: fixed; top: 20px; right: 20px; font-size: 24px; background: rgba(255,255,255,0.2); border-radius: 50%; padding: 10px; color: white; cursor: pointer; z-index: 1000; }
         
         .progress-container { background: #eee; border-radius: 10px; height: 12px; margin: 15px 0 5px 0; overflow: hidden; }
         .progress-bar { background: var(--primary); width: 0%; height: 100%; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+        footer { margin-top: 40px; padding: 20px; text-align: center; color: white; width: 100%; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body data-theme="light">
@@ -135,7 +140,7 @@
         </div>
     </div>
 
-    <footer style="margin-top: 40px; color: white; text-align: center;">
+    <footer>
         <p>© 2026 Dashboard Created by <strong>Fabio</strong> | IT Student 🚀</p>
     </footer>
 
@@ -146,7 +151,7 @@
         }
 
         window.onload = () => {
-            const s = JSON.parse(localStorage.getItem("fabioIntTasks")) || [];
+            const s = JSON.parse(localStorage.getItem("fabioIntTasksV4")) || [];
             if (s.length === 0) {
                 const i = ["English Study 🇺🇸", "IT Study 💻", "Physical Activity 🏋️", "Finance Org 💰"];
                 i.forEach(t => renderTask(t, false));
@@ -174,9 +179,10 @@
         function saveTasks() {
             const t = [];
             document.querySelectorAll('#taskList li').forEach(li => {
-                t.push({ text: li.querySelector('span').innerText, done: li.querySelector('span').classList.contains('concluida') });
+                const span = li.querySelector('span');
+                t.push({ text: span.innerText, done: span.classList.contains('concluida') });
             });
-            localStorage.setItem("fabioIntTasks", JSON.stringify(t));
+            localStorage.setItem("fabioIntTasksV4", JSON.stringify(t));
             atualizarGrafico();
         }
 
@@ -184,8 +190,10 @@
             const tot = document.querySelectorAll('#taskList li').length;
             const con = document.querySelectorAll('#taskList .concluida').length;
             const por = tot > 0 ? Math.round((con / tot) * 100) : 0;
-            document.getElementById('barra-progresso').style.width = por + "%";
-            document.getElementById('texto-progresso').innerText = por + "%";
+            const b = document.getElementById('barra-progresso');
+            if(b) b.style.width = por + "%";
+            const txt = document.getElementById('texto-progresso');
+            if(txt) txt.innerText = por + "%";
             if (por === 100 && tot > 0) { confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } }); }
         }
 
@@ -193,13 +201,19 @@
             { q: "Is HTML a programming language?", a: false },
             { q: "Does CSS style the page?", a: true },
             { q: "Can JS create browser alerts?", a: true },
-            { q: "Is Bootstrap a CSS framework?", a: true }
+            { q: "Is GitHub and Git the same thing?", a: false },
+            { q: "Does responsiveness adjust site to mobile?", a: true }
         ];
         let idx = 0; let pts = 0;
-        function carregarPergunta() { document.getElementById('pergunta-texto').innerText = perguntas[idx].q; document.getElementById('feedback').innerText = ""; }
+        function carregarPergunta() { 
+            const p = document.getElementById('pergunta-texto');
+            if(p) p.innerText = perguntas[idx].q; 
+            const f = document.getElementById('feedback');
+            if(f) f.innerText = ""; 
+        }
         function verificar(res) {
             const f = document.getElementById('feedback');
-            if (f.innerText !== "") return;
+            if (!f || f.innerText !== "") return;
             const cor = (res === perguntas[idx].a);
             f.innerText = cor ? "Correct! ✅" : "Wrong! ❌";
             f.style.color = cor ? "#2ecc71" : "#e74c3c";
@@ -216,7 +230,8 @@
         let tmr; let tmp = 25 * 60;
         function atualizarDisplay() {
             const m = Math.floor(tmp / 60); const s = tmp % 60;
-            document.getElementById('timer-display').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            const d = document.getElementById('timer-display');
+            if(d) d.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }
         function startTimer() { clearInterval(tmr); tmr = setInterval(() => { if(tmp>0){tmp--; atualizarDisplay();} else {clearInterval(tmr); alert("Focus complete! ☕");} }, 1000); }
         function pauseTimer() { clearInterval(tmr); }
@@ -225,6 +240,4 @@
 </body>
 </html>
 
-      
-
-
+       

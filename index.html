@@ -20,7 +20,7 @@
         }
 
         body {
-            /* Link direto para a imagem do homem no notebook que você enviou */
+            /* Imagem da pessoa estudando que você escolheu */
             background-image: url('https://unsplash.com');
             background-size: cover;
             background-position: center;
@@ -39,31 +39,10 @@
         }
 
         header { text-align: center; margin-bottom: 30px; }
-        
-        header h1 {
-            color: #f1c40f;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin: 0;
-        }
-
-        header p {
-            color: #ffffff;
-            font-style: italic;
-            font-weight: bold;
-            margin-top: 5px;
-        }
+        header h1 { color: #f1c40f; font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); margin: 0; }
+        header p { color: #ffffff; font-style: italic; font-weight: bold; margin-top: 5px; }
 
         .dashboard {
-            <div class="card quiz-box">
-    <h2>Timer de Foco ⏱️</h2>
-    <div id="timer-display" style="font-size: 3rem; font-weight: bold; margin: 10px 0;">25:00</div>
-    <div style="display: flex; gap: 10px;">
-        <button class="btn-main" style="background:#27ae60" onclick="startTimer()">INICIAR</button>
-        <button class="btn-main" style="background:#e67e22" onclick="pauseTimer()">PAUSAR</button>
-        <button class="btn-main" style="background:#95a5a6" onclick="resetTimer()">RESET</button>
-    </div>
-
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
@@ -76,66 +55,18 @@
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            text-align: center;
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
+        input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; }
+        button { cursor: pointer; border: none; border-radius: 10px; font-weight: bold; transition: 0.3s; }
+        .btn-main { background: var(--primary); color: white; padding: 10px; width: 100%; margin-top: 5px; }
 
-        button {
-            cursor: pointer;
-            border: none;
-            border-radius: 10px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .btn-main {
-            background: var(--primary);
-            color: white;
-            padding: 10px;
-            width: 100%;
-            margin-top: 5px;
-        }
-
-        /* Estilo para o botão Próxima */
-        .btn-next {
-            background-color: #636e72;
-            color: white;
-            margin-top: 15px;
-            padding: 10px;
-            width: 100%;
-        }
-        .btn-next:hover {
-            background-color: #2d3436;
-            color: #f1c40f;
-        }
-
-        .quiz-box { text-align: center; }
         .pergunta { font-size: 1.1rem; min-height: 50px; margin-bottom: 15px; font-weight: bold; }
         .res-feedback { margin-top: 10px; font-weight: bold; height: 20px; }
 
-        #theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            padding: 5px;
-        }
-
-        footer {
-            margin-top: 40px;
-            padding-bottom: 20px;
-            text-align: center;
-            color: white;
-        }
+        #theme-toggle { position: fixed; top: 20px; right: 20px; font-size: 24px; background: rgba(255,255,255,0.2); border-radius: 50%; padding: 5px; }
+        footer { margin-top: 40px; padding-bottom: 20px; text-align: center; color: white; }
     </style>
 </head>
 <body data-theme="light">
@@ -148,16 +79,16 @@
     </header>
 
     <div class="dashboard">
-        <!-- BLOCO 1: LISTA DE TAREFAS -->
+        <!-- BLOCO 1: LISTA -->
         <div class="card">
-            <h2>Metas do Dia 📝</h2>
+            <h2 style="text-align: left">Metas do Dia 📝</h2>
             <input type="text" id="taskInput" placeholder="Nova tarefa...">
             <button class="btn-main" onclick="addTask()">Adicionar</button>
-            <ul id="taskList" style="padding: 10px 0; margin: 0;"></ul>
+            <ul id="taskList" style="padding: 10px 0; margin: 0; text-align: left"></ul>
         </div>
 
         <!-- BLOCO 2: QUIZ -->
-        <div class="card quiz-box">
+        <div class="card">
             <h2>Revisão de TI 🧠</h2>
             <div id="pergunta-texto" class="pergunta">Carregando...</div>
             <div style="display: flex; gap: 10px;">
@@ -165,19 +96,30 @@
                 <button class="btn-main" style="background:#e74c3c" onclick="verificar(false)">NÃO</button>
             </div>
             <div id="feedback" class="res-feedback"></div>
-            <button class="btn-next" onclick="proximaPergunta()">Próxima</button>
+            <button class="btn-main" style="background:#636e72; margin-top: 15px;" onclick="proximaPergunta()">Próxima</button>
         </div>
 
         <!-- BLOCO 3: CALCULADORA -->
         <div class="card">
-            <h2>Calculadora 💡</h2>
+            <h2 style="text-align: left">Calculadora 💡</h2>
             <input type="number" id="n1" placeholder="Valor 1">
             <input type="number" id="n2" placeholder="Valor 2">
             <div style="display: flex; gap: 10px;">
                 <button class="btn-main" onclick="calc('+')">+</button>
                 <button class="btn-main" onclick="calc('*')">x</button>
             </div>
-            <h3 id="res-calc" style="text-align: center; color: var(--primary); margin-top: 15px;">0</h3>
+            <h3 id="res-calc" style="color: var(--primary); margin-top: 15px;">0</h3>
+        </div>
+
+        <!-- BLOCO 4: TIMER (NOVO!) -->
+        <div class="card">
+            <h2>Foco nos Estudos ⏱️</h2>
+            <div id="timer-display" style="font-size: 3rem; font-weight: bold; margin: 10px 0;">25:00</div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-main" style="background:#27ae60" onclick="startTimer()">PLAY</button>
+                <button class="btn-main" style="background:#e67e22" onclick="pauseTimer()">PAUSE</button>
+                <button class="btn-main" style="background:#95a5a6" onclick="resetTimer()">RESET</button>
+            </div>
         </div>
     </div>
 
@@ -188,97 +130,65 @@
     <script>
         function toggleTheme() {
             const body = document.body;
-            const theme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', theme);
+            body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         }
 
+        // Lógica do Quiz
         const perguntas = [
             { q: "HTML é uma linguagem de programação?", a: false },
             { q: "CSS serve para dar estilo à página?", a: true },
             { q: "JavaScript pode criar alertas no navegador?", a: true },
-            { q: "Bootstrap é um framework de CSS?", a: true },
             { q: "O <head> é a parte visível do site?", a: false }
         ];
-
         let indexAtual = 0;
-
         function carregarPergunta() {
             document.getElementById('pergunta-texto').innerText = perguntas[indexAtual].q;
             document.getElementById('feedback').innerText = "";
         }
-
         function verificar(respostaUser) {
             const feedback = document.getElementById('feedback');
-            if (respostaUser === perguntas[indexAtual].a) {
-                feedback.innerText = "Correto! ✅";
-                feedback.style.color = "#2ecc71";
-            } else {
-                feedback.innerText = "Errado! ❌";
-                feedback.style.color = "#e74c3c";
-            }
+            feedback.innerText = (respostaUser === perguntas[indexAtual].a) ? "Correto! ✅" : "Errado! ❌";
+            feedback.style.color = (respostaUser === perguntas[indexAtual].a) ? "#2ecc71" : "#e74c3c";
         }
+        function proximaPergunta() { indexAtual = (indexAtual + 1) % perguntas.length; carregarPergunta(); }
 
-        function proximaPergunta() {
-            indexAtual = (indexAtual + 1) % perguntas.length;
-            carregarPergunta();
-        }
-
+        // Lógica da Lista
         function addTask() {
             const input = document.getElementById('taskInput');
             if(!input.value) return;
-
             const li = document.createElement('li');
-            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:8px 12px; border-radius:10px; list-style:none; display:flex; align-items:center; justify-content:space-between; cursor:pointer;";
-            
-            li.innerHTML = `
-                <span onclick="this.style.textDecoration='line-through'" style="flex-grow: 1;">${input.value}</span>
-                <button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer;">🗑️</button>
-            `;
-            
+            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:8px; border-radius:10px; list-style:none; display:flex; justify-content:space-between; align-items:center;";
+            li.innerHTML = `<span onclick="this.style.textDecoration='line-through'">${input.value}</span> <button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer">🗑️</button>`;
             document.getElementById('taskList').appendChild(li);
             input.value = '';
         }
 
+        // Lógica da Calc
         function calc(op) {
             const v1 = Number(document.getElementById('n1').value);
             const v2 = Number(document.getElementById('n2').value);
             document.getElementById('res-calc').innerText = op === '+' ? v1 + v2 : v1 * v2;
         }
 
+        // Lógica do Timer
+        let timer;
+        let tempoRestante = 25 * 60;
+        function atualizarDisplay() {
+            const min = Math.floor(tempoRestante / 60);
+            const seg = tempoRestante % 60;
+            document.getElementById('timer-display').innerText = `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+        }
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                if (tempoRestante > 0) { tempoRestante--; atualizarDisplay(); }
+                else { clearInterval(timer); alert("Pausa concluída! ☕"); }
+            }, 1000);
+        }
+        function pauseTimer() { clearInterval(timer); }
+        function resetTimer() { clearInterval(timer); tempoRestante = 25 * 60; atualizarDisplay(); }
+
         carregarPergunta();
     </script>
-    let timer;
-let tempoRestante = 25 * 60; // 25 minutos em segundos
-
-function atualizarDisplay() {
-    const minutos = Math.floor(tempoRestante / 60);
-    const segundos = tempoRestante % 60;
-    document.getElementById('timer-display').innerText = 
-        `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-}
-
-function startTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => {
-        if (tempoRestante > 0) {
-            tempoRestante--;
-            atualizarDisplay();
-        } else {
-            clearInterval(timer);
-            alert("Hora de descansar um pouco! ☕");
-        }
-    }, 1000);
-}
-
-function pauseTimer() {
-    clearInterval(timer);
-}
-
-function resetTimer() {
-    clearInterval(timer);
-    tempoRestante = 25 * 60;
-    atualizarDisplay();
-}
-
 </body>
 </html>

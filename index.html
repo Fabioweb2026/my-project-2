@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Lista de Tarefas Pro</title>
+    <title>Minha Lista Pro</title>
     
-    <!-- Bootstrap 5 CSS -->
+    <!-- LINK OBRIGATÓRIO DO BOOTSTRAP (Estilo) -->
     <link href="https://jsdelivr.net" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
+    <!-- ÍCONES DO BOOTSTRAP -->
     <link rel="stylesheet" href="https://jsdelivr.net">
 
     <style>
@@ -16,20 +17,23 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            justify-content: center;
+            font-family: sans-serif;
+            margin: 0;
         }
         .card {
-            border-radius: 20px;
+            border-radius: 15px;
             border: none;
+            width: 100%;
+            max-width: 450px;
         }
         .concluida {
             text-decoration: line-through;
-            opacity: 0.5;
+            color: #adb5bd;
         }
         .item-tarefa {
-            transition: 0.2s;
             cursor: pointer;
-            border-bottom: 1px solid #eee !important;
+            transition: 0.3s;
         }
         .item-tarefa:hover {
             background-color: #f8f9fa;
@@ -38,101 +42,95 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-11 col-sm-8 col-md-6 col-lg-4">
+    <div class="container d-flex justify-content-center">
+        <div class="card shadow-lg p-4">
+            <h2 class="text-center mb-4">Minhas Tarefas 📝</h2>
             
-            <div class="card shadow-lg p-4">
-                <h2 class="text-center mb-4">Tarefas 📝</h2>
-                
-                <!-- Entrada de Tarefa -->
-                <div class="input-group mb-3">
-                    <input type="text" id="tarefa" class="form-control" placeholder="O que precisa fazer?">
-                    <button class="btn btn-primary" onclick="adicionar()">
-                        <i class="bi bi-plus-lg"></i>
-                    </button>
-                </div>
-
-                <!-- Lista -->
-                <ul id="lista" class="list-group list-group-flush">
-                    <!-- Itens aparecem aqui -->
-                </ul>
-
-                <!-- Botão Limpar (Opcional) -->
-                <button class="btn btn-sm btn-link text-muted mt-3" onclick="limparTudo()">Limpar lista</button>
+            <!-- Campo de Entrada -->
+            <div class="input-group mb-3">
+                <input type="text" id="tarefa" class="form-control" placeholder="O que vamos fazer?">
+                <button class="btn btn-primary" onclick="adicionar()">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
             </div>
 
+            <!-- Lista de Tarefas -->
+            <ul id="lista" class="list-group list-group-flush">
+                <!-- Itens serão injetados aqui -->
+            </ul>
+
+            <button class="btn btn-sm btn-link text-secondary mt-3 w-100" onclick="limpar()">Limpar Tudo</button>
         </div>
     </div>
-</div>
 
-<script>
-    // Carregar dados ao abrir a página
-    window.onload = () => {
-        const salvas = JSON.parse(localStorage.getItem("tarefas_v1")) || [];
-        salvas.forEach(t => criarElemento(t.texto, t.feita));
-    };
+    <!-- SCRIPT DO BOOTSTRAP (Interatividade) -->
+    <script src="https://jsdelivr.net"></script>
 
-    function adicionar() {
-        const input = document.getElementById("tarefa");
-        const texto = input.value.trim();
-        
-        if (texto !== "") {
-            criarElemento(texto, false);
-            salvar();
-            input.value = "";
-            input.focus();
+    <script>
+        // Carregar do banco de dados local (LocalStorage)
+        window.onload = () => {
+            const salvas = JSON.parse(localStorage.getItem("db_tarefas")) || [];
+            salvas.forEach(t => criarHTML(t.texto, t.feita));
         }
-    }
 
-    function criarElemento(texto, feita) {
-        const li = document.createElement("li");
-        li.className = "list-group-item d-flex justify-content-between align-items-center item-tarefa px-0";
-        
-        const classeFeita = feita ? "concluida" : "";
+        function adicionar() {
+            const input = document.getElementById("tarefa");
+            const texto = input.value.trim();
+            if (texto) {
+                criarHTML(texto, false);
+                salvarDados();
+                input.value = "";
+                input.focus();
+            }
+        }
 
-        li.innerHTML = `
-            <span onclick="alternar(this)" class="flex-grow-1 ${classeFeita}">${texto}</span>
-            <button class="btn btn-link text-danger p-0" onclick="remover(this)">
-                <i class="bi bi-trash3"></i>
-            </button>
-        `;
-        document.getElementById("lista").appendChild(li);
-    }
+        function criarHTML(texto, feita) {
+            const li = document.createElement("li");
+            li.className = "list-group-item d-flex justify-content-between align-items-center item-tarefa px-2 border-0 mb-1 rounded";
+            
+            const checkedClass = feita ? "concluida" : "";
 
-    function remover(botao) {
-        botao.parentElement.remove();
-        salvar();
-    }
+            li.innerHTML = `
+                <span onclick="toggle(this)" class="flex-grow-1 ${checkedClass}">${texto}</span>
+                <button class="btn btn-sm text-danger" onclick="remover(this)">
+                    <i class="bi bi-trash3"></i>
+                </button>
+            `;
+            document.getElementById("lista").appendChild(li);
+        }
 
-    function alternar(span) {
-        span.classList.toggle("concluida");
-        salvar();
-    }
+        function remover(btn) {
+            btn.parentElement.remove();
+            salvarDados();
+        }
 
-    function salvar() {
-        const todos = [];
-        document.querySelectorAll("#lista li").forEach(li => {
-            todos.push({
-                texto: li.querySelector("span").innerText,
-                feita: li.querySelector("span").classList.contains("concluida")
+        function toggle(span) {
+            span.classList.toggle("concluida");
+            salvarDados();
+        }
+
+        function salvarDados() {
+            const items = [];
+            document.querySelectorAll("#lista li").forEach(li => {
+                items.push({
+                    texto: li.querySelector("span").innerText,
+                    feita: li.querySelector("span").classList.contains("concluida")
+                });
             });
-        });
-        localStorage.setItem("tarefas_v1", JSON.stringify(todos));
-    }
-
-    function limparTudo() {
-        if(confirm("Deseja apagar todas as tarefas?")) {
-            document.getElementById("lista").innerHTML = "";
-            localStorage.removeItem("tarefas_v1");
+            localStorage.setItem("db_tarefas", JSON.stringify(items));
         }
-    }
 
-    // Adicionar com a tecla Enter
-    document.getElementById("tarefa").addEventListener("keypress", (e) => {
-        if (e.key === "Enter") adicionar();
-    });
-</script>
+        function limpar() {
+            if(confirm("Apagar tudo?")) {
+                document.getElementById("lista").innerHTML = "";
+                localStorage.removeItem("db_tarefas");
+            }
+        }
 
+        // Enter no teclado
+        document.getElementById("tarefa").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") adicionar();
+        });
+    </script>
 </body>
 </html>

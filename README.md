@@ -1,14 +1,20 @@
-# 🚀 My IT Journey Dashboard
-This project is a personal workspace developed while studying **Systems Analysis and Development (ADS)**.
+# 🚀 Creator Flow - Personal Productivity Dashboard
 
-## 🛠 Features
-- **Study Timer**: Pomodoro technique for deep focus.
-- **Interactive Tech Quiz**: Testing IT fundamentals in English.
-- **Daily Goals**: Interactive checklist with progress tracking.
-- **Budget Tool**: Quick calculator for project costs.
+This is a professional dashboard developed to manage my daily study routine as an **IT Student (Systems Analysis and Development)**. 
 
-## 🎯 Career Goals
-I am a Brazilian IT student preparing to work in the international market, with a special focus on **Malta 🇲🇹** and **Spain 🇪🇸**.
+## 🛠️ Tech Stack
+- **HTML5 & CSS3**: Responsive layout using Grid and Flexbox.
+- **JavaScript (Vanilla)**: DOM manipulation, LocalStorage for data persistence, and interactive logic.
+- **External Libraries**: Canvas-Confetti for user celebration.
 
-## 💻 Tech Stack
-- HTML5, CSS3 (Grid & Flexbox), JavaScript (Vanilla)
+## 🌟 Key Features
+- **Daily Goals**: Interactive checklist with a real-time progress bar.
+- **Tech Quiz**: Active recall tool to study IT fundamentals in English.
+- **Study Timer**: Pomodoro-based timer for deep work sessions.
+- **Budget Tool**: Quick calculator for project estimations.
+
+## 🎯 My Goal
+I am a dedicated IT student preparing for the international job market, specifically focusing on opportunities in **Malta 🇲🇹** and **Spain 🇪🇸**.
+
+---
+*Developed with ❤️ by Fabio*

@@ -135,11 +135,18 @@
 
         // Lógica do Quiz
         const perguntas = [
-            { q: "HTML é uma linguagem de programação?", a: false },
-            { q: "CSS serve para dar estilo à página?", a: true },
-            { q: "JavaScript pode criar alertas no navegador?", a: true },
-            { q: "O <head> é a parte visível do site?", a: false }
-        ];
+    { q: "HTML é uma linguagem de programação?", a: false },
+    { q: "CSS serve para dar estilo à página?", a: true },
+    { q: "JavaScript pode criar alertas no navegador?", a: true },
+    { q: "O <head> é a parte visível do site?", a: false },
+    // Novas perguntas para o seu banco:
+    { q: "O comando 'console.log' serve para mostrar mensagens no código?", a: true },
+    { q: "GitHub e Git são exatamente a mesma coisa?", a: false },
+    { q: "A tag <a> serve para criar links no HTML?", a: true },
+    { q: "O comando 'background-color' no CSS muda a cor do texto?", a: false },
+    { q: "Responsividade significa que o site se ajusta ao celular?", a: true }
+];
+
         let indexAtual = 0;
         function carregarPergunta() {
             document.getElementById('pergunta-texto').innerText = perguntas[indexAtual].q;

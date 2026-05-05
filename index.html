@@ -55,6 +55,15 @@
         }
 
         .dashboard {
+            <div class="card quiz-box">
+    <h2>Timer de Foco ⏱️</h2>
+    <div id="timer-display" style="font-size: 3rem; font-weight: bold; margin: 10px 0;">25:00</div>
+    <div style="display: flex; gap: 10px;">
+        <button class="btn-main" style="background:#27ae60" onclick="startTimer()">INICIAR</button>
+        <button class="btn-main" style="background:#e67e22" onclick="pauseTimer()">PAUSAR</button>
+        <button class="btn-main" style="background:#95a5a6" onclick="resetTimer()">RESET</button>
+    </div>
+
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
@@ -238,5 +247,38 @@
 
         carregarPergunta();
     </script>
+    let timer;
+let tempoRestante = 25 * 60; // 25 minutos em segundos
+
+function atualizarDisplay() {
+    const minutos = Math.floor(tempoRestante / 60);
+    const segundos = tempoRestante % 60;
+    document.getElementById('timer-display').innerText = 
+        `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+}
+
+function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+        if (tempoRestante > 0) {
+            tempoRestante--;
+            atualizarDisplay();
+        } else {
+            clearInterval(timer);
+            alert("Hora de descansar um pouco! ☕");
+        }
+    }, 1000);
+}
+
+function pauseTimer() {
+    clearInterval(timer);
+}
+
+function resetTimer() {
+    clearInterval(timer);
+    tempoRestante = 25 * 60;
+    atualizarDisplay();
+}
+
 </body>
 </html>

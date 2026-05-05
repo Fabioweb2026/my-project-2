@@ -20,7 +20,7 @@
         }
 
         body {
-            /* Link direto para a imagem do notebook/estudo */
+            /* Link direto para a imagem profissional de estudo */
             background-image: url('https://unsplash.com');
             background-size: cover;
             background-position: center;
@@ -88,9 +88,9 @@
         </div>
 
         <!-- BLOCO 2: QUIZ -->
-        <div class="card quiz-box">
+        <div class="card">
             <h2>Revisão de TI 🧠</h2>
-            <p style="font-weight: bold;">Pontuação: <span id="placar" style="color: #6c5ce7;">0</span></p>
+            <p style="font-weight: bold;">Pontuação: <span id="placar">0</span></p>
             <div id="pergunta-texto" class="pergunta">Carregando...</div>
             <div style="display: flex; gap: 10px;">
                 <button class="btn-main" style="background:#2ecc71" onclick="verificar(true)">SIM</button>
@@ -134,15 +134,13 @@
             body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         }
 
-        // Lógica do Quiz
         const perguntas = [
             { q: "HTML é uma linguagem de programação?", a: false },
             { q: "CSS serve para dar estilo à página?", a: true },
             { q: "JavaScript pode criar alertas no navegador?", a: true },
             { q: "O <head> é a parte visível do site?", a: false },
-            { q: "O comando 'console.log' serve para mostrar mensagens?", a: true },
-            { q: "A tag <a> serve para criar links?", a: true },
-            { q: "Responsividade significa que o site se ajusta ao celular?", a: true }
+            { q: "GitHub e Git são a mesma coisa?", a: false },
+            { q: "Responsividade ajusta o site ao celular?", a: true }
         ];
 
         let indexAtual = 0;
@@ -155,15 +153,14 @@
 
         function verificar(respostaUser) {
             const feedback = document.getElementById('feedback');
-            const placarDisplay = document.getElementById('placar');
-
-            if (feedback.innerText !== "") return; // Evita responder 2x a mesma
+            const placar = document.getElementById('placar');
+            if (feedback.innerText !== "") return;
 
             if (respostaUser === perguntas[indexAtual].a) {
                 feedback.innerText = "Correto! ✅";
                 feedback.style.color = "#2ecc71";
                 pontos++;
-                placarDisplay.innerText = pontos;
+                placar.innerText = pontos;
             } else {
                 feedback.innerText = "Errado! ❌";
                 feedback.style.color = "#e74c3c";
@@ -172,32 +169,26 @@
 
         function proximaPergunta() {
             indexAtual = (indexAtual + 1) % perguntas.length;
-            if (indexAtual === 0) {
-                pontos = 0;
-                document.getElementById('placar').innerText = pontos;
-            }
+            if (indexAtual === 0) { pontos = 0; document.getElementById('placar').innerText = "0"; }
             carregarPergunta();
         }
 
-        // Lógica da Lista
         function addTask() {
             const input = document.getElementById('taskInput');
             if(!input.value) return;
             const li = document.createElement('li');
-            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:8px; border-radius:10px; list-style:none; display:flex; justify-content:space-between; align-items:center;";
-            li.innerHTML = `<span onclick="this.style.textDecoration='line-through'">${input.value}</span> <button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer">🗑️</button>`;
+            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:8px; border-radius:10px; display:flex; justify-content:space-between; align-items:center;";
+            li.innerHTML = `<span>${input.value}</span> <button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer">🗑️</button>`;
             document.getElementById('taskList').appendChild(li);
             input.value = '';
         }
 
-        // Lógica da Calc
         function calc(op) {
             const v1 = Number(document.getElementById('n1').value);
             const v2 = Number(document.getElementById('n2').value);
             document.getElementById('res-calc').innerText = op === '+' ? v1 + v2 : v1 * v2;
         }
 
-        // Lógica do Timer
         let timer;
         let tempoRestante = 25 * 60;
         function atualizarDisplay() {
@@ -219,4 +210,14 @@
     </script>
 </body>
 </html>
+
+          
+
+      
+
+   
+
+      
+      
+
 

@@ -5,22 +5,145 @@
     <title>Minha Lista de Tarefas</title>
 </head>
 <body>
+    <style>
+    
+    body {
+        background: linear-gradient(135deg, #74b9ff, #a29bfe); 
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center; 
+        align-items: center;     
+        height: 100vh;           
+        margin: 0;
+    }
 
-    <!-- Estrutura principal -->
-    <div id="caixa-principal">
-        <h1>Minha Lista 📝</h1>
+    
+    #caixa-principal {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;     
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 400px;        
+        text-align: center;
+    }
+
+    
+    .entrada {
+        display: flex;
+        gap: 10px;               
+        margin-bottom: 20px;
+    }
+
+    input {
+        flex-grow: 1;            
+        padding: 12px;
+        border: 2px solid #eee;
+        border-radius: 10px;
+        outline: none;
+    }
+
+    button#btn-adicionar {
+        background-color: #6c5ce7;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    
+    ul {
+        list-group-style: none;
+        padding: 0;
+        margin-top: 20px;
+    }
+
+    li {
+        background: #f9f9f9;
+        margin-bottom: 10px;
+        padding: 12px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    
+    .concluida {
+        text-decoration: line-through;
+        color: #b2bec3;
+    }
+</style>
+<script>
+    const inputTarefa = document.getElementById('input-tarefa');
+    const btnAdicionar = document.getElementById('btn-adicionar');
+    const listaUl = document.getElementById('lista-tarefas');
+    const btnLimpar = document.getElementById('btn-limpar');
+
+    
+    window.onload = function() {
+        const salvas = JSON.parse(localStorage.getItem('minhasTarefas')) || [];
+        salvas.forEach(t => criarElemento(t.texto, t.feita));
+    };
+
+    function adicionarTarefa() {
+        const texto = inputTarefa.value.trim();
+        if (texto === "") return;
+
+        criarElemento(texto, false);
+        salvarNoStorage(); 
+        inputTarefa.value = "";
+    }
+
+    
+    function criarElemento(texto, feita) {
+        const li = document.createElement('li');
+        const classeFeita = feita ? 'concluida' : '';
+
+        li.innerHTML = `
+            <span onclick="concluirTarefa(this)" class="${classeFeita}">${texto}</span>
+            <button onclick="removerTarefa(this)" style="background:none; border:none; cursor:pointer;">❌</button>
+        `;
+        listaUl.appendChild(li);
+    }
+
+    function removerTarefa(botao) {
+        botao.parentElement.remove();
+        salvarNoStorage(); 
+    }
+
+    function concluirTarefa(span) {
+        span.classList.toggle('concluida');
+        salvarNoStorage(); 
+    }
+
+    
+    function salvarNoStorage() {
+        const todasAsTarefas = [];
+        const itens = document.querySelectorAll('#lista-tarefas li');
+
+        itens.forEach(li => {
+            todasAsTarefas.push({
+                texto: li.querySelector('span').innerText,
+                feita: li.querySelector('span').classList.contains('concluida')
+            });
+        });
+
         
-        <div class="entrada">
-            <input type="text" id="input-tarefa" placeholder="Digite uma tarefa...">
-            <button id="btn-adicionar">Adicionar</button>
-        </div>
+        localStorage.setItem('minhasTarefas', JSON.stringify(todasAsTarefas));
+    }
 
-        <ul id="lista-tarefas">
-            <!-- As tarefas vão aparecer aqui dentro -->
-        </ul>
+    btnLimpar.onclick = function() {
+        if(confirm("Apagar tudo?")) {
+            listaUl.innerHTML = "";
+            localStorage.removeItem('minhasTarefas'); 
+        }
+    };
 
-        <button id="btn-limpar">Limpar Tudo</button>
-    </div>
+    btnAdicionar.addEventListener('click', adicionarTarefa);
+    inputTarefa.addEventListener('keypress', (e) => { if (e.key === 'Enter') adicionarTarefa(); });
+</script>
 
-</body>
-</html>
+

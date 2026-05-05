@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creator Dashboard & Quiz</title>
+    <title>Creator Dashboard | Fabio Pro</title>
+    
+    <!-- Bibliotecas Externas: Confetes e Ícones -->
+    <script src="https://jsdelivr.net"></script>
+    <link rel="stylesheet" href="https://jsdelivr.net">
+
     <style>
         :root {
             --bg-color: rgba(240, 242, 245, 0.85);
@@ -20,7 +25,6 @@
         }
 
         body {
-            /* Link direto para a imagem profissional de estudo */
             background-image: url('https://unsplash.com');
             background-size: cover;
             background-position: center;
@@ -52,26 +56,34 @@
 
         .card {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 25px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             text-align: center;
         }
 
-        input { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; }
+        input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box; background: rgba(0,0,0,0.02); color: inherit; }
         button { cursor: pointer; border: none; border-radius: 10px; font-weight: bold; transition: 0.3s; }
-        .btn-main { background: var(--primary); color: white; padding: 10px; width: 100%; margin-top: 5px; }
+        .btn-main { background: var(--primary); color: white; padding: 12px; width: 100%; margin-top: 5px; }
+        .btn-main:hover { filter: brightness(1.2); }
 
         .pergunta { font-size: 1.1rem; min-height: 50px; margin-bottom: 15px; font-weight: bold; }
         .res-feedback { margin-top: 10px; font-weight: bold; height: 20px; }
 
-        #theme-toggle { position: fixed; top: 20px; right: 20px; font-size: 24px; background: rgba(255,255,255,0.2); border-radius: 50%; padding: 5px; }
-        footer { margin-top: 40px; padding-bottom: 20px; text-align: center; color: white; }
+        .concluida { text-decoration: line-through; opacity: 0.5; color: #636e72; }
+
+        #theme-toggle { position: fixed; top: 20px; right: 20px; font-size: 24px; background: rgba(255,255,255,0.2); border-radius: 50%; padding: 10px; color: white; cursor: pointer; }
+        
+        footer { margin-top: 40px; padding: 20px; text-align: center; color: white; width: 100%; }
+
+        /* Estilo da Barra de Progresso */
+        .progress-container { background: #eee; border-radius: 10px; height: 12px; margin: 15px 0 5px 0; overflow: hidden; }
+        .progress-bar { background: var(--primary); width: 0%; height: 100%; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     </style>
 </head>
 <body data-theme="light">
 
-    <button id="theme-toggle" onclick="toggleTheme()">🌓</button>
+    <div id="theme-toggle" onclick="toggleTheme()">🌓</div>
 
     <header>
         <h1>Creator Flow 🚀</h1>
@@ -79,18 +91,26 @@
     </header>
 
     <div class="dashboard">
-        <!-- BLOCO 1: LISTA -->
+        <!-- BLOCO 1: METAS COM GRÁFICO -->
         <div class="card">
-            <h2 style="text-align: left">Metas do Dia 📝</h2>
-            <input type="text" id="taskInput" placeholder="Nova tarefa...">
-            <button class="btn-main" onclick="addTask()">Adicionar</button>
+            <h2 style="text-align: left; margin:0">Metas do Dia 📝</h2>
+            
+            <div class="progress-container">
+                <div id="barra-progresso" class="progress-bar"></div>
+            </div>
+            <p style="font-size: 0.8rem; text-align: right; margin-bottom: 15px;">Concluído: <span id="texto-progresso">0%</span></p>
+
+            <div style="display: flex; gap: 5px;">
+                <input type="text" id="taskInput" placeholder="Nova tarefa...">
+                <button class="btn-main" style="width: 60px; margin:0" onclick="addTask()">+</button>
+            </div>
             <ul id="taskList" style="padding: 10px 0; margin: 0; text-align: left"></ul>
         </div>
 
         <!-- BLOCO 2: QUIZ -->
         <div class="card">
             <h2>Revisão de TI 🧠</h2>
-            <p style="font-weight: bold;">Pontuação: <span id="placar">0</span></p>
+            <p>Acertos: <span id="placar" style="color: var(--primary); font-weight: bold;">0</span></p>
             <div id="pergunta-texto" class="pergunta">Carregando...</div>
             <div style="display: flex; gap: 10px;">
                 <button class="btn-main" style="background:#2ecc71" onclick="verificar(true)">SIM</button>
@@ -102,20 +122,22 @@
 
         <!-- BLOCO 3: CALCULADORA -->
         <div class="card">
-            <h2 style="text-align: left">Calculadora 💡</h2>
-            <input type="number" id="n1" placeholder="Valor 1">
-            <input type="number" id="n2" placeholder="Valor 2">
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-main" onclick="calc('+')">+</button>
-                <button class="btn-main" onclick="calc('*')">x</button>
+            <h2 style="text-align: left; margin:0">Calculadora 💡</h2>
+            <div style="margin-top: 20px;">
+                <input type="number" id="n1" placeholder="Valor 1">
+                <input type="number" id="n2" placeholder="Valor 2">
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-main" onclick="calc('+')">+</button>
+                    <button class="btn-main" onclick="calc('*')">x</button>
+                </div>
+                <h3 id="res-calc" style="color: var(--primary); margin-top: 15px; font-size: 2rem;">0</h3>
             </div>
-            <h3 id="res-calc" style="color: var(--primary); margin-top: 15px;">0</h3>
         </div>
 
         <!-- BLOCO 4: TIMER -->
         <div class="card">
             <h2>Foco nos Estudos ⏱️</h2>
-            <div id="timer-display" style="font-size: 3rem; font-weight: bold; margin: 10px 0;">25:00</div>
+            <div id="timer-display" style="font-size: 3.5rem; font-weight: bold; margin: 10px 0; color: #2ecc71;">25:00</div>
             <div style="display: flex; gap: 10px;">
                 <button class="btn-main" style="background:#27ae60" onclick="startTimer()">PLAY</button>
                 <button class="btn-main" style="background:#e67e22" onclick="pauseTimer()">PAUSE</button>
@@ -125,7 +147,7 @@
     </div>
 
     <footer>
-        <p>© 2026 Dashboard Criado por <strong>Fabio</strong> | Estudante de TI 🚀</p>
+        <p>© 2026 Dashboard Criado por <strong>Fabio</strong> | Analista em Formação 🚀</p>
     </footer>
 
     <script>
@@ -134,88 +156,107 @@
             body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         }
 
-        const perguntas = [
-            { q: "HTML é uma linguagem de programação?", a: false },
-            { q: "CSS serve para dar estilo à página?", a: true },
-            { q: "JavaScript pode criar alertas no navegador?", a: true },
-            { q: "O <head> é a parte visível do site?", a: false },
-            { q: "GitHub e Git são a mesma coisa?", a: false },
-            { q: "Responsividade ajusta o site ao celular?", a: true }
-        ];
-
-        let indexAtual = 0;
-        let pontos = 0;
-
-        function carregarPergunta() {
-            document.getElementById('pergunta-texto').innerText = perguntas[indexAtual].q;
-            document.getElementById('feedback').innerText = "";
-        }
-
-        function verificar(respostaUser) {
-            const feedback = document.getElementById('feedback');
-            const placar = document.getElementById('placar');
-            if (feedback.innerText !== "") return;
-
-            if (respostaUser === perguntas[indexAtual].a) {
-                feedback.innerText = "Correto! ✅";
-                feedback.style.color = "#2ecc71";
-                pontos++;
-                placar.innerText = pontos;
+        // --- LÓGICA DA LISTA ---
+        window.onload = () => {
+            const salvas = JSON.parse(localStorage.getItem("fabioTasksV3")) || [];
+            if (salvas.length === 0) {
+                const iniciais = ["Estudar Inglês 🇺🇸", "Estudar TI 💻", "Praticar Atividade Física 🏋️", "Organizar Finanças 💰"];
+                iniciais.forEach(t => renderTask(t, false));
+                saveTasks();
             } else {
-                feedback.innerText = "Errado! ❌";
-                feedback.style.color = "#e74c3c";
+                salvas.forEach(t => renderTask(t.text, t.done));
             }
-        }
-
-        function proximaPergunta() {
-            indexAtual = (indexAtual + 1) % perguntas.length;
-            if (indexAtual === 0) { pontos = 0; document.getElementById('placar').innerText = "0"; }
+            atualizarGrafico();
             carregarPergunta();
-        }
+        };
 
         function addTask() {
             const input = document.getElementById('taskInput');
             if(!input.value) return;
-            const li = document.createElement('li');
-            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:8px; border-radius:10px; display:flex; justify-content:space-between; align-items:center;";
-            li.innerHTML = `<span>${input.value}</span> <button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer">🗑️</button>`;
-            document.getElementById('taskList').appendChild(li);
+            renderTask(input.value, false);
+            saveTasks();
             input.value = '';
         }
 
+        function renderTask(text, done) {
+            const li = document.createElement('li');
+            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:10px; border-radius:12px; list-style:none; display:flex; justify-content:space-between; align-items:center;";
+            li.innerHTML = `
+                <span onclick="toggleTask(this)" class="${done ? 'concluida' : ''}" style="flex-grow:1; cursor:pointer;">${text}</span>
+                <button onclick="this.parentElement.remove(); saveTasks()" style="background:none; border:none; cursor:pointer">🗑️</button>
+            `;
+            document.getElementById('taskList').appendChild(li);
+        }
+
+        function toggleTask(el) {
+            el.classList.toggle('concluida');
+            saveTasks();
+        }
+
+        function saveTasks() {
+            const tasks = [];
+            document.querySelectorAll('#taskList li').forEach(li => {
+                tasks.push({ text: li.querySelector('span').innerText, done: li.querySelector('span').classList.contains('concluida') });
+            });
+            localStorage.setItem("fabioTasksV3", JSON.stringify(tasks));
+            atualizarGrafico();
+        }
+
+        function atualizarGrafico() {
+            const total = document.querySelectorAll('#taskList li').length;
+            const concluidas = document.querySelectorAll('#taskList .concluida').length;
+            const porcentagem = total > 0 ? Math.round((concluidas / total) * 100) : 0;
+
+            document.getElementById('barra-progresso').style.width = porcentagem + "%";
+            document.getElementById('texto-progresso').innerText = porcentagem + "%";
+
+            if (porcentagem === 100 && total > 0) {
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            }
+        }
+
+        // --- QUIZ ---
+        const perguntas = [
+            { q: "HTML é uma linguagem de programação?", a: false },
+            { q: "CSS serve para dar estilo à página?", a: true },
+            { q: "JavaScript pode criar alertas?", a: true },
+            { q: "GitHub e Git são a mesma coisa?", a: false },
+            { q: "Responsividade ajusta o site ao celular?", a: true }
+        ];
+        let indexAtual = 0; let pontos = 0;
+        function carregarPergunta() {
+            document.getElementById('pergunta-texto').innerText = perguntas[indexAtual].q;
+            document.getElementById('feedback').innerText = "";
+        }
+        function verificar(res) {
+            const f = document.getElementById('feedback');
+            if (f.innerText !== "") return;
+            const correto = (res === perguntas[indexAtual].a);
+            f.innerText = correto ? "Correto! ✅" : "Errado! ❌";
+            f.style.color = correto ? "#2ecc71" : "#e74c3c";
+            if(correto) { pontos++; document.getElementById('placar').innerText = pontos; }
+        }
+        function proximaPergunta() { indexAtual = (indexAtual + 1) % perguntas.length; carregarPergunta(); }
+
+        // --- CALC E TIMER ---
         function calc(op) {
             const v1 = Number(document.getElementById('n1').value);
             const v2 = Number(document.getElementById('n2').value);
             document.getElementById('res-calc').innerText = op === '+' ? v1 + v2 : v1 * v2;
         }
 
-        let timer;
-        let tempoRestante = 25 * 60;
+        let timer; let tempo = 25 * 60;
         function atualizarDisplay() {
-            const min = Math.floor(tempoRestante / 60);
-            const seg = tempoRestante % 60;
-            document.getElementById('timer-display').innerText = `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+            const m = Math.floor(tempo / 60); const s = tempo % 60;
+            document.getElementById('timer-display').innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }
-        function startTimer() {
-            clearInterval(timer);
-            timer = setInterval(() => {
-                if (tempoRestante > 0) { tempoRestante--; atualizarDisplay(); }
-                else { clearInterval(timer); alert("Pausa concluída! ☕"); }
-            }, 1000);
-        }
+        function startTimer() { clearInterval(timer); timer = setInterval(() => { if(tempo>0){tempo--; atualizarDisplay();} else {clearInterval(timer); alert("Foco concluído! ☕");} }, 1000); }
         function pauseTimer() { clearInterval(timer); }
-        function resetTimer() { clearInterval(timer); tempoRestante = 25 * 60; atualizarDisplay(); }
-
-        carregarPergunta();
+        function resetTimer() { clearInterval(timer); tempo = 25 * 60; atualizarDisplay(); }
     </script>
 </body>
 </html>
 
-          
-
-      
-
-   
 
       
       

@@ -6,11 +6,10 @@
     <title>Creator Dashboard & Quiz</title>
     <style>
         :root {
-             :root {
-        --bg-color: rgba(240, 242, 245, 0.85);
-        --card-bg: #ffffff;
-        --text-main: #2d3436;
-        --primary: #6c5ce7;
+            --bg-color: rgba(240, 242, 245, 0.85);
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --primary: #6c5ce7;
         }
 
         [data-theme="dark"] {
@@ -21,56 +20,42 @@
         }
 
         body {
-       background-image: url('https://unsplash.com'); 
-        background-size: cover; 
-        background-position: center; 
-        background-attachment: fixed; 
-        background-color: rgba(0, 0, 0, 0.5); 
-        background-blend-mode: darken;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        font-family: sans-serif;
-    }
-    
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    font-family: sans-serif;
-}
-    header h1 { 
-        color: #f1c40f; /* Amarelo */
-        font-size: 2.5rem; 
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    }
-
-    header p { 
-        color: #ffffff; /* Branco */
-        font-style: italic; 
-        font-weight: bold;
-    }  
-
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-}
-
-            color: var(--text-main);
+            /* Link corrigido para a imagem de notebook */
+            background-image: url('https://unsplash.com');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: rgba(0, 0, 0, 0.5);
+            background-blend-mode: darken;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
             padding: 20px;
             transition: 0.4s;
         }
 
-        header { text-align: center; margin-bottom: 30px; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #f1c40f; /* Amarelo */
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin: 0;
+        }
+
+        header p {
+            color: #ffffff; /* Branco */
+            font-style: italic;
+            font-weight: bold;
+            margin-top: 5px;
+        }
 
         .dashboard {
             display: grid;
@@ -84,25 +69,60 @@
             background: var(--card-bg);
             padding: 20px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         input {
-            width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ddd; margin-bottom: 10px; box-sizing: border-box;
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            box-sizing: border-box;
         }
 
         button {
-            cursor: pointer; border: none; border-radius: 10px; font-weight: bold; transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
         }
 
-        .btn-main { background: var(--primary); color: white; padding: 10px; width: 100%; margin-top: 5px; }
+        .btn-main {
+            background: var(--primary);
+            color: white;
+            padding: 10px;
+            width: 100%;
+            margin-top: 5px;
+        }
 
-        
-        .quiz-box { text-align: center; }
-        .pergunta { font-size: 1.1rem; min-height: 50px; margin-bottom: 15px; font-weight: bold; }
-        .res-feedback { margin-top: 10px; font-weight: bold; height: 20px; }
-        
-        #theme-toggle { position: fixed; top: 20px; right: 20px; font-size: 24px; background: none; }
+        .quiz-box {
+            text-align: center;
+        }
+
+        .pergunta {
+            font-size: 1.1rem;
+            min-height: 50px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .res-feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            height: 20px;
+        }
+
+        #theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            padding: 5px;
+        }
     </style>
 </head>
 <body data-theme="light">
@@ -110,16 +130,8 @@
     <button id="theme-toggle" onclick="toggleTheme()">🌓</button>
 
     <header>
-        <h1>Creator Flow 🚀</h1> {color: #f1c40f; 
-    margin: 0; 
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        <p>"Estudando TI: Um passo de cada vez."</p>  color: #ffffff; 
-        }
-    font-style: italic; 
-    opacity: 1; 
-    font-weight: bold;
+        <h1>Creator Flow 🚀</h1>
+        <p>"Estudando TI: Um passo de cada vez."</p>
     </header>
 
     <div class="dashboard">
@@ -131,7 +143,7 @@
             <ul id="taskList" style="padding: 10px 0;"></ul>
         </div>
 
-        <!-- BLOCO 2: QUIZ SIM/NÃO (NOVO) -->
+        <!-- BLOCO 2: QUIZ -->
         <div class="card quiz-box">
             <h2>Revisão de TI 🧠</h2>
             <div id="pergunta-texto" class="pergunta">Carregando pergunta...</div>
@@ -143,7 +155,7 @@
             <button class="btn-main" style="background:#95a5a6; margin-top: 15px;" onclick="proximaPergunta()">Próxima</button>
         </div>
 
-        
+        <!-- BLOCO 3: CALCULADORA -->
         <div class="card">
             <h2>Calculadora 💡</h2>
             <input type="number" id="n1" placeholder="Valor 1">
@@ -152,18 +164,16 @@
                 <button class="btn-main" onclick="calc('+')">+</button>
                 <button class="btn-main" onclick="calc('*')">x</button>
             </div>
-            <h3 id="res-calc" style="text-align: center; color: var(--primary);">0</h3>
+            <h3 id="res-calc" style="text-align: center; color: var(--primary); margin-top: 15px;">0</h3>
         </div>
     </div>
 
     <script>
-        
         function toggleTheme() {
             const body = document.body;
             body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
         }
 
-        
         const perguntas = [
             { q: "HTML é uma linguagem de programação?", a: false },
             { q: "CSS serve para dar estilo à página?", a: true },
@@ -195,25 +205,22 @@
             carregarPergunta();
         }
 
-        
         function addTask() {
             const input = document.getElementById('taskInput');
             if(!input.value) return;
             const li = document.createElement('li');
             li.innerHTML = `<span onclick="this.style.textDecoration='line-through'">${input.value}</span>`;
-            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:8px; border-radius:5px; list-style:none";
+            li.style.cssText = "background:rgba(0,0,0,0.05); margin:5px 0; padding:8px; border-radius:5px; list-style:none; cursor:pointer;";
             document.getElementById('taskList').appendChild(li);
             input.value = '';
         }
 
-        
         function calc(op) {
             const v1 = Number(document.getElementById('n1').value);
             const v2 = Number(document.getElementById('n2').value);
             document.getElementById('res-calc').innerText = op === '+' ? v1 + v2 : v1 * v2;
         }
 
-    
         carregarPergunta();
     </script>
 </body>

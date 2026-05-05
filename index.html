@@ -1,4 +1,4 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -92,189 +92,59 @@
 <script src="https://jsdelivr.net"></script>
 </body>
 </html>
+// 1. Carregar as tarefas assim que a página abrir
+window.onload = function() {
+    const tarefasSalvas = JSON.parse(localStorage.getItem("minhasTarefas")) || [];
+    tarefasSalvas.forEach(t => criarElementoTarefa(t.texto, t.concluida));
+};
 
-<html lang="pt-BR"
-<head>
-  <meta charset="UFT-8"
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minha Lista de Tarefas</title> Pro</title>
-   <!-- Bootstrap 5 CSS -->
-    <link href="https://jsdelivr.net" rel="stylesheet">
-    <!-- Ícones (Opcional, mas deixa mais bonito) -->
-    <link rel="stylesheet" href="https://jsdelivr.net">
-
-    <style>
-        body {
-            background: linear-gradient(135deg, #74b9ff, #a29bfe);
-            min-height: 100vh;
-        }
-        .concluida {
-            text-decoration: line-through;
-            opacity: 0.6;
-        }
-        .item-tarefa {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .item-tarefa:hover {
-            transform: translateX(5px);
-        }
-    </style>
-</head>
-<body class="d-flex align-items-center justify-content-center">
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow-lg border-0 rounded-4 p-4">
-                <h1 class="text-center h3 mb-4">Tarefas 📝</h1>
-                
-                <!-- Grupo de Entrada -->
-                <div class="input-group mb-3">
-                    <input type="text" id="tarefa" class="form-control" placeholder="O que vamos fazer?">
-                    <button class="btn btn-primary" onclick="adicionar()">
-                        <i class="bi bi-plus-lg"></i>
-                    </button>
-                </div>
-
-                <!-- Lista de Itens -->
-                <ul id="lista" class="list-group list-group-flush">
-                    <!-- As tarefas entrarão aqui -->
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function adicionar() {
-        let input = document.getElementById("tarefa");
-        let texto = input.value;
-        if (texto.trim() === "") return;
-
-        let li = document.createElement("li");
-        // Classes do Bootstrap para estilizar o item da lista
-        li.className = "list-group-item d-flex justify-content-between align-items-center border-0 mb-2 bg-light rounded-3 item-tarefa";
-        
-        li.innerHTML = `
-            <span onclick="concluir(this)" class="flex-grow-1">${texto}</span>
-            <button class="btn btn-sm btn-outline-danger border-0" onclick="remover(this)">
-                <i class="bi bi-trash3"></i>
-            </button>
-        `;
-
-        document.getElementById("lista").appendChild(li);
-        input.value = "";
-    }
-
-    function remover(botao) {
-        botao.parentElement.remove();
-    }
-
-    function concluir(texto) {
-        texto.classList.toggle("concluida");
-    }
-
-    // Atalho: Adicionar ao apertar "Enter"
-    document.getElementById("tarefa").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") adicionar();
-    });
-</script>
-
-<!-- JS do Bootstrap -->
-<script src="https://jsdelivr.net"></script>
-</body>
-</html>
-Use o código com cuidado.O que mudou?Input Group: Usei o input-group do Bootstrap para o botão ficar colado no campo de texto.Responsividade: O uso de col-md-5 faz com que o cartão ocupe quase toda a tela no celular, mas fique centralizado e menor no computador.Ícones: Substituí o emoji ❌ pelo ícone do Bootstrap Icons.UX (Experiência do Usuário): Adicionei um evento de teclado para que você possa apertar "Enter" para adicionar a tarefa sem precisar clicar no botão.Deseja aprender como salvar essas tarefas no navegador para que elas não sumam quando você atualizar a página?
-
-  <style>
-    body {
-      font-family: Arial;
-      background: linear-gradient(135deg, #74b9ff, #a29bfe);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 15px;
-      width: 350px;
-      text-align: center;
-    }
-
-    input {
-      padding: 10px;
-      width: 70%;
-    }
-
-    button {
-      padding: 10px;
-      background: #6c5ce7;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    li {
-      list-style: none;
-      margin-top: 10px;
-      background: #f1f2f6;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    .concluida {
-      text-decoration: line-through;
-      color: gray;
-    }
-  </style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-  <h1>Minha Lista de Tarefas 📝</h1>
-
-  <input id="tarefa" placeholder="Digite uma tarefa">
-  <button onclick="adicionar()">Adicionar</button>
-
-  <ul id="lista"></ul>
-
-</div>
-
-<script>
 function adicionar() {
-  let input = document.getElementById("tarefa");
-  let texto = input.value;
+    let input = document.getElementById("tarefa");
+    let texto = input.value;
+    if (texto.trim() === "") return;
 
-  if (texto === "") return;
+    criarElementoTarefa(texto, false);
+    salvarNoStorage(); // Salva após adicionar
+    input.value = "";
+}
 
-  let li = document.createElement("li");
-
-  li.innerHTML = `
-    <span onclick="concluir(this)">${texto}</span>
-    <button onclick="remover(this)">❌</button>
-  `;
-
-  document.getElementById("lista").appendChild(li);
-
-  input.value = "";
+// Função auxiliar para criar o HTML da tarefa
+function criarElementoTarefa(texto, concluida) {
+    let li = document.createElement("li");
+    li.className = "list-group-item d-flex justify-content-between align-items-center border-0 mb-2 bg-light rounded-3 item-tarefa";
+    
+    let classeConcluida = concluida ? "concluida" : "";
+    
+    li.innerHTML = `
+        <span onclick="concluir(this)" class="flex-grow-1 ${classeConcluida}">${texto}</span>
+        <button class="btn btn-sm btn-outline-danger border-0" onclick="remover(this)">
+            <i class="bi bi-trash3"></i>
+        </button>
+    `;
+    document.getElementById("lista").appendChild(li);
 }
 
 function remover(botao) {
-  botao.parentElement.remove();
+    botao.parentElement.remove();
+    salvarNoStorage(); // Salva após remover
 }
 
 function concluir(texto) {
-  texto.classList.toggle("concluida");
+    texto.classList.toggle("concluida");
+    salvarNoStorage(); // Salva após marcar como feita
 }
-</script>
 
-</body>
-</html>
+// 2. Função que varre a lista e salva no LocalStorage
+function salvarNoStorage() {
+    const listaLi = document.querySelectorAll("#lista li");
+    const tarefas = [];
+
+    listaLi.forEach(li => {
+        tarefas.push({
+            texto: li.querySelector("span").innerText,
+            concluida: li.querySelector("span").classList.contains("concluida")
+        });
+    });
+
+    localStorage.setItem("minhasTarefas", JSON.stringify(tarefas));
+}

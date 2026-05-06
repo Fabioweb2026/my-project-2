@@ -8,14 +8,10 @@
         body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; color: #333; }
         h1 { color: white; margin-bottom: 30px; }
         .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-        
-        /* Estilo do Card Profissional */
         .card { background: white; border-radius: 12px; width: 300px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .setor-tag { background: #6c5ce7; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; text-transform: uppercase; font-weight: bold; }
         h2 { margin: 15px 0 5px; font-size: 1.4rem; }
         .cargo { color: #666; font-style: italic; margin-bottom: 15px; display: block; }
-        
-        /* Seção de Funções (Dropdown) */
         details { border-top: 1px solid #eee; padding-top: 10px; cursor: pointer; }
         summary { font-weight: bold; color: #6c5ce7; outline: none; }
         ul { padding-left: 20px; font-size: 0.9rem; line-height: 1.6; color: #555; }
@@ -26,12 +22,11 @@
     <h1>Organização da Empresa</h1>
 
     <div class="container">
-        <!-- Exemplo de Funcionário 1 -->
+        <!-- Funcionário 1 -->
         <div class="card">
             <span class="setor-tag">Financeiro</span>
             <h2>Carlos Oliveira</h2>
             <span class="cargo">Gerente de Contas</span>
-            
             <details>
                 <summary>Ver Atribuições</summary>
                 <ul>
@@ -43,18 +38,17 @@
             </details>
         </div>
 
-        <!-- Exemplo de Funcionário 2 -->
+        <!-- Funcionário 2 -->
         <div class="card">
             <span class="setor-tag">Operações</span>
             <h2>Maria Souza</h2>
             <span class="cargo">Coordenadora Logística</span>
-            
             <details>
                 <summary>Ver Atribuições</summary>
                 <ul>
-                    <li>Otimização de rotas de entrega.</li>
-                    <li>Gestão de inventário e estoque.</li>
-                    <li>Controle de fornecedores externos.</li>
+                    <li><strong>Logística:</strong> Otimização de rotas para redução de custos e prazos.</li>
+                    <li><strong>Inventário:</strong> Gestão de estoque com foco em evitar perdas e rupturas.</li>
+                    <li><strong>Fornecedores:</strong> Monitoramento de contratos e performance de parceiros externos.</li>
                 </ul>
             </details>
         </div>

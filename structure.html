@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Org Structure Explorer | Fábio Dev</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #333; }
+        header { background: #1c2e4a; color: white; padding: 30px; text-align: center; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+        .sector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .sector-card { background: white; padding: 20px; border-radius: 10px; border-top: 5px solid #1c2e4a; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .sector-card h3 { margin-top: 0; color: #1c2e4a; }
+        ul { padding-left: 20px; font-size: 0.9rem; line-height: 1.6; }
+        .badge { background: #e8f0fe; color: #1967d2; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+        .back-link { display: block; text-align: center; margin-top: 40px; color: #1c2e4a; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🏢 Corporate Structure Explorer</h1>
+    <p>Organizing sectors, roles, and responsibilities</p>
+</header>
+
+<div class="container">
+    <div class="sector-grid">
+        <div class="sector-card">
+            <h3>Information Technology</h3>
+            <span class="badge">Technical</span>
+            <ul>
+                <li><strong>Frontend Dev:</strong> UI/UX implementation.</li>
+                <li><strong>Backend Dev:</strong> Database management.</li>
+                <li><strong>Support:</strong> Infrastructure & Security.</li>
+            </ul>
+        </div>
+
+        <div class="sector-card" style="border-top-color: #27ae60;">
+            <h3>Human Resources</h3>
+            <span class="badge">Administrative</span>
+            <ul>
+                <li><strong>Recruitment:</strong> Talent acquisition.</li>
+                <li><strong>Onboarding:</strong> New hire integration.</li>
+                <li><strong>Training:</strong> Skill development.</li>
+            </ul>
+        </div>
+
+        <div class="sector-card" style="border-top-color: #f39c12;">
+            <h3>Operations</h3>
+            <span class="badge">Core Business</span>
+            <ul>
+                <li><strong>Coordination:</strong> Process optimization.</li>
+                <li><strong>Logistics:</strong> Supply chain control.</li>
+                <li><strong>Quality:</strong> Standard compliance.</li>
+            </ul>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
+</div>
+
+</body>
+</html>

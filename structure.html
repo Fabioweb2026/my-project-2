@@ -7,8 +7,30 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; color: #333; }
         h1 { color: white; margin-bottom: 30px; }
-        .container { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-        .card { background: white; border-radius: 12px; width: 300px; padding: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        
+        .container { 
+            display: flex; 
+            gap: 20px; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            padding-top: 20px; 
+        }
+
+        .card { 
+            background: white; 
+            border-radius: 12px; 
+            width: 300px; 
+            padding: 20px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+            transition: 0.3s; /* Faz o efeito hover ser suave */
+        }
+
+        /* O EFEITO HOVER QUE VOCÊ PROCURAVA */
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
         .setor-tag { background: #6c5ce7; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; text-transform: uppercase; font-weight: bold; }
         h2 { margin: 15px 0 5px; font-size: 1.4rem; }
         .cargo { color: #666; font-style: italic; margin-bottom: 15px; display: block; }
@@ -42,22 +64,6 @@
         <div class="card">
             <span class="setor-tag">Operações</span>
             <h2>Maria Souza</h2>
-                    <!-- Funcionário 3 -->
-        <div class="card">
-            <span class="setor-tag">Recursos Humanos</span>
-            <h2>Ricardo Santos</h2>
-            <span class="cargo">Analista de D.H.O.</span>
-            <details>
-                <summary>Ver Atribuições</summary>
-                <ul>
-                    <li><strong>Recrutamento:</strong> Gestão de processos seletivos e integração de novos talentos (Onboarding).</li>
-                    <li><strong>Treinamento:</strong> Desenvolvimento de programas de capacitação e planos de carreira.</li>
-                    <li><strong>Cultura:</strong> Monitoramento do clima organizacional e ações de engajamento interno.</li>
-                    <li><strong>Compliance:</strong> Garantia da conformidade com as leis trabalhistas e normas internas.</li>
-                </ul>
-            </details>
-        </div>
-
             <span class="cargo">Coordenadora Logística</span>
             <details>
                 <summary>Ver Atribuições</summary>
@@ -65,6 +71,22 @@
                     <li><strong>Logística:</strong> Otimização de rotas para redução de custos e prazos.</li>
                     <li><strong>Inventário:</strong> Gestão de estoque com foco em evitar perdas e rupturas.</li>
                     <li><strong>Fornecedores:</strong> Monitoramento de contratos e performance de parceiros externos.</li>
+                </ul>
+            </details>
+        </div>
+
+        <!-- Funcionário 3 -->
+        <div class="card">
+            <span class="setor-tag">Recursos Humanos</span>
+            <h2>Ricardo Santos</h2>
+            <span class="cargo">Analista de D.H.O.</span>
+            <details>
+                <summary>Ver Atribuições</summary>
+                <ul>
+                    <li><strong>Recrutamento:</strong> Gestão de processos seletivos e integração de novos talentos.</li>
+                    <li><strong>Treinamento:</strong> Desenvolvimento de programas de capacitação.</li>
+                    <li><strong>Cultura:</strong> Monitoramento do clima organizacional.</li>
+                    <li><strong>Compliance:</strong> Garantia da conformidade com as leis trabalhistas.</li>
                 </ul>
             </details>
         </div>
